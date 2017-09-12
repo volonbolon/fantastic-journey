@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0170A421F6868EE00448BE4 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0170A401F6868EE00448BE4 /* Location+CoreDataClass.swift */; };
+		B0170A431F6868EE00448BE4 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0170A411F6868EE00448BE4 /* Location+CoreDataProperties.swift */; };
 		B01FEB411F682C540050972E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01FEB401F682C540050972E /* AppDelegate.swift */; };
 		B01FEB431F682C540050972E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01FEB421F682C540050972E /* ViewController.swift */; };
 		B01FEB461F682C540050972E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B01FEB441F682C540050972E /* Main.storyboard */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B0170A401F6868EE00448BE4 /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataClass.swift"; path = "FantasticJourney/Location+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B0170A411F6868EE00448BE4 /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataProperties.swift"; path = "FantasticJourney/Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B01FEB3D1F682C540050972E /* FantasticJourney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FantasticJourney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B01FEB401F682C540050972E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B01FEB421F682C540050972E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 		B01FEB341F682C540050972E = {
 			isa = PBXGroup;
 			children = (
+				B0170A401F6868EE00448BE4 /* Location+CoreDataClass.swift */,
+				B0170A411F6868EE00448BE4 /* Location+CoreDataProperties.swift */,
 				B01FEB3F1F682C540050972E /* FantasticJourney */,
 				B01FEB571F682C540050972E /* FantasticJourneyTests */,
 				B01FEB621F682C540050972E /* FantasticJourneyUITests */,
@@ -265,9 +271,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0170A421F6868EE00448BE4 /* Location+CoreDataClass.swift in Sources */,
 				B01FEB431F682C540050972E /* ViewController.swift in Sources */,
 				B01FEB411F682C540050972E /* AppDelegate.swift in Sources */,
 				B01FEB491F682C540050972E /* FantasticJourney.xcdatamodeld in Sources */,
+				B0170A431F6868EE00448BE4 /* Location+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +526,7 @@
 				B01FEB6A1F682C540050972E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B01FEB6B1F682C540050972E /* Build configuration list for PBXNativeTarget "FantasticJourneyTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +535,7 @@
 				B01FEB6D1F682C540050972E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B01FEB6E1F682C540050972E /* Build configuration list for PBXNativeTarget "FantasticJourneyUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +544,7 @@
 				B01FEB701F682C540050972E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
