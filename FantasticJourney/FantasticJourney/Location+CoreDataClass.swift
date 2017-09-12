@@ -11,5 +11,5 @@ import CoreData
 
 @objc(Location)
 public class Location: NSManagedObject {
-
+    static let ManagedObjectName:String = "Location"
 }
