@@ -29,6 +29,48 @@
             </objects>
             <point key="canvasLocation" x="1076" y="138.98050974512745"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="LeL-Z5-ub9">
+            <objects>
+                <viewController id="auk-qr-u4G" customClass="MapViewController" customModule="FantasticJourney" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iy3-ga-AO0"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xv0-3k-hx2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GV8-Ay-0jg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="prF-n5-Erq">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <connections>
+                                    <outlet property="delegate" destination="auk-qr-u4G" id="lzo-Vt-VQO"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="prF-n5-Erq" secondAttribute="trailing" id="Zep-kA-4S3"/>
+                            <constraint firstItem="prF-n5-Erq" firstAttribute="top" secondItem="iy3-ga-AO0" secondAttribute="bottom" id="hNO-Bz-pjA"/>
+                            <constraint firstItem="Xv0-3k-hx2" firstAttribute="top" secondItem="prF-n5-Erq" secondAttribute="bottom" id="k2h-RD-aHm"/>
+                            <constraint firstItem="prF-n5-Erq" firstAttribute="leading" secondItem="GV8-Ay-0jg" secondAttribute="leading" id="pht-gW-Abn"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="k6M-tU-aAZ">
+                        <barButtonItem key="rightBarButtonItem" title="List" id="7Tq-GP-LHJ">
+                            <connections>
+                                <segue destination="Zqp-dm-ati" kind="show" id="8zY-Wk-E9t"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="prF-n5-Erq" id="ooV-Pd-nW5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dmo-PI-g5G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="648.79999999999995" y="921.58920539730138"/>
+        </scene>
         <!--Log-->
         <scene sceneID="u08-Cn-0lF">
             <objects>
@@ -82,7 +124,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oZn-J4-zOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="gf9-Js-0jF" customClass="LogTableViewControllerDatasource" customModule="FantasticJourney" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="-55" y="820"/>
+            <point key="canvasLocation" x="1391" y="922"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="RcQ-Lk-hKl">
@@ -95,12 +137,31 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="xtz-63-BED"/>
-                        <segue destination="Zqp-dm-ati" kind="relationship" relationship="viewControllers" id="sWC-OX-cZK"/>
+                        <segue destination="air-ZS-xOJ" kind="relationship" relationship="viewControllers" id="F87-8R-9jH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPP-Vy-TlB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+        </scene>
+        <!--Log-->
+        <scene sceneID="1jb-LR-dSR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="air-ZS-xOJ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Log" id="n0z-nN-EnO"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZRC-hN-xMS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="auk-qr-u4G" kind="relationship" relationship="rootViewController" id="qtF-zc-nMX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uqd-kV-Pcv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-290.39999999999998" y="921.58920539730138"/>
         </scene>
     </scenes>
 </document>

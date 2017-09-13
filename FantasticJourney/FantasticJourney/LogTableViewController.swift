@@ -76,8 +76,9 @@ class LogTableViewControllerDatasource:NSObject, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as! LogTableViewCell
         
         let location = self.fetchedResultsController.object(at: indexPath) as! Location
-        
-        cell.locationLabel.text = "\(location.latitude), \(location.longitude)"
+        let lat = String(format:"%.5f", location.latitude)
+        let lng = String(format:"%.5f", location.longitude)
+        cell.locationLabel.text = "\(lat), \(lng)"
         let date = self.dateFormatter.string(from: location.timestamp! as Date)
         cell.timestampLabel.text = date
         

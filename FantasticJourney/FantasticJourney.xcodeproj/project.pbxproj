@@ -10,6 +10,9 @@
 		B0170A421F6868EE00448BE4 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0170A401F6868EE00448BE4 /* Location+CoreDataClass.swift */; };
 		B0170A431F6868EE00448BE4 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0170A411F6868EE00448BE4 /* Location+CoreDataProperties.swift */; };
 		B0170A481F68701A00448BE4 /* LogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0170A471F68701A00448BE4 /* LogTableViewController.swift */; };
+		B0170A4B1F6892B200448BE4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0170A4A1F6892B200448BE4 /* MapKit.framework */; };
+		B0170A4D1F6894C500448BE4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0170A4C1F6894C500448BE4 /* CoreLocation.framework */; };
+		B0170A4F1F68975000448BE4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0170A4E1F68975000448BE4 /* MapViewController.swift */; };
 		B01FEB411F682C540050972E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01FEB401F682C540050972E /* AppDelegate.swift */; };
 		B01FEB431F682C540050972E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01FEB421F682C540050972E /* ViewController.swift */; };
 		B01FEB461F682C540050972E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B01FEB441F682C540050972E /* Main.storyboard */; };
@@ -41,6 +44,9 @@
 		B0170A401F6868EE00448BE4 /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B0170A411F6868EE00448BE4 /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B0170A471F68701A00448BE4 /* LogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogTableViewController.swift; sourceTree = "<group>"; };
+		B0170A4A1F6892B200448BE4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B0170A4C1F6894C500448BE4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B0170A4E1F68975000448BE4 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B01FEB3D1F682C540050972E /* FantasticJourney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FantasticJourney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B01FEB401F682C540050972E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B01FEB421F682C540050972E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +68,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0170A4D1F6894C500448BE4 /* CoreLocation.framework in Frameworks */,
+				B0170A4B1F6892B200448BE4 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +99,15 @@
 			name = "Managed Objects";
 			sourceTree = "<group>";
 		};
+		B0170A491F6892B200448BE4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B0170A4C1F6894C500448BE4 /* CoreLocation.framework */,
+				B0170A4A1F6892B200448BE4 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B01FEB341F682C540050972E = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +115,7 @@
 				B01FEB571F682C540050972E /* FantasticJourneyTests */,
 				B01FEB621F682C540050972E /* FantasticJourneyUITests */,
 				B01FEB3E1F682C540050972E /* Products */,
+				B0170A491F6892B200448BE4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +141,7 @@
 				B01FEB4F1F682C540050972E /* Info.plist */,
 				B01FEB471F682C540050972E /* FantasticJourney.xcdatamodeld */,
 				B0170A471F68701A00448BE4 /* LogTableViewController.swift */,
+				B0170A4E1F68975000448BE4 /* MapViewController.swift */,
 			);
 			path = FantasticJourney;
 			sourceTree = "<group>";
@@ -288,6 +307,7 @@
 				B01FEB411F682C540050972E /* AppDelegate.swift in Sources */,
 				B01FEB491F682C540050972E /* FantasticJourney.xcdatamodeld in Sources */,
 				B0170A431F6868EE00448BE4 /* Location+CoreDataProperties.swift in Sources */,
+				B0170A4F1F68975000448BE4 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
