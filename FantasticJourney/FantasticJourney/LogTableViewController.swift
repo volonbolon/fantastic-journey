@@ -89,7 +89,6 @@ class LogTableViewControllerDatasource:NSObject, UITableViewDataSource {
 }
 
 class LogTableViewController: UITableViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -83,6 +83,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="k6M-tU-aAZ">
+                        <barButtonItem key="leftBarButtonItem" title="Export" id="NdM-Gl-1lu">
+                            <connections>
+                                <action selector="export:" destination="auk-qr-u4G" id="6D9-NJ-dCs"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="List" id="7Tq-GP-LHJ">
                             <connections>
                                 <segue destination="Zqp-dm-ati" kind="show" id="8zY-Wk-E9t"/>
@@ -146,6 +151,8 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Log" id="Q8E-le-k2u"/>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oZn-J4-zOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="gf9-Js-0jF" customClass="LogTableViewControllerDatasource" customModule="FantasticJourney" customModuleProvider="target"/>

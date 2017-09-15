@@ -57,9 +57,76 @@ class MapViewController: UIViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func export(_ sender: Any) {
+        let s = self.exportString()
+        self.saveAndExport(exportString: s)
+    }
+}
+
+extension MapViewController { // MARK:- Export
+    var dateFormatter:DateFormatter {
+        get {
+            let df = DateFormatter()
+            df.dateFormat = "dd.MM.yy hh:MM a"
+            return df
+        }
+    }
+    
+    func saveAndExport(exportString: String) {
+        let exportFilePath = NSTemporaryDirectory() + "locations.csv"
+        let exportFileURL = NSURL(fileURLWithPath: exportFilePath)
+        FileManager.default.createFile(atPath: exportFilePath, contents: NSData() as Data, attributes: nil)
+        //var fileHandleError: NSError? = nil
+        var fileHandle: FileHandle? = nil
+        do {
+            fileHandle = try FileHandle(forWritingTo: exportFileURL as URL)
+        } catch {
+            print("Error with fileHandle")
+        }
+        
+        if fileHandle != nil {
+            fileHandle!.seekToEndOfFile()
+            let csvData = exportString.data(using: String.Encoding.utf8, allowLossyConversion: false)
+            fileHandle!.write(csvData!)
+            
+            fileHandle!.closeFile()
+            
+            let firstActivityItem = NSURL(fileURLWithPath: exportFilePath)
+            let activityViewController : UIActivityViewController = UIActivityViewController(
+                activityItems: [firstActivityItem], applicationActivities: nil)
+            
+            activityViewController.excludedActivityTypes = [
+                UIActivityType.assignToContact,
+                UIActivityType.saveToCameraRoll,
+                UIActivityType.postToFlickr,
+                UIActivityType.postToVimeo,
+                UIActivityType.postToTencentWeibo
+            ]
+            
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+    }
+    
+    func exportString() -> String {
+        let locationFetch = NSFetchRequest<NSFetchRequestResult>(entityName: Location.ManagedObjectName)
+
+        var exportString = "Origin, Coordinate, Arrival Date, Departure Date\n"
+
+        let df = self.dateFormatter
+        do {
+            let fetch = try self.context.fetch(locationFetch) as! [Location]
+            for l in fetch {
+                let arrivalDate = df.string(from: l.arrivalDate! as Date)
+                let departureDate = df.string(from: l.departureDate! as Date)
+                let coordinate = "\(l.latitude) \(l.longitude)"
+                let s = "\(l.locationOrigin), \(coordinate), \(arrivalDate), \(departureDate)"
+                exportString += s
+            }
+        } catch {
+            print(error)
+        }
+
+        return exportString
     }
 }
 
@@ -93,5 +160,13 @@ extension MapViewController:MKMapViewDelegate {
         
         annotationView.canShowCallout = true
         return annotationView
+    }
+}
+
+extension CLLocationCoordinate2D: CustomStringConvertible {
+    public var description:String {
+        get {
+            return "\(self.latitude);\(self.longitude)"
+        }
     }
 }
