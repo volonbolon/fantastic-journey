@@ -22,9 +22,9 @@ class IntrospectiveCoreLocationManager: CLLocationManager {
         super.stopMonitoringVisits()
     }
     
-    override func startUpdatingLocation() {
+    override func startMonitoringSignificantLocationChanges() {
         self.updating = true
-        super.startUpdatingLocation()
+        super.startMonitoringSignificantLocationChanges()
     }
     
     override func stopUpdatingLocation() {
