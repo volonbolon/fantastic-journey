@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 import CoreLocation
+import UserNotifications
+import UserNotificationsUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        let nc = UNUserNotificationCenter.current()
+        nc.delegate = self
+        nc.requestAuthorization(options: [.sound, .alert]) { (granted:Bool, e:Error?) in
+            if e != nil {
+                print(e!)
+            }
+        }
         
         return true
     }
@@ -98,25 +108,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate:CLLocationManagerDelegate {
-    fileprivate func addLocation(coordinate:CLLocationCoordinate2D, arrivalDate:Date, departureDate:Date?, origin:LocationOrigin) {
+    var dateFormatter:DateFormatter {
+        get {
+            let df = DateFormatter()
+            df.dateStyle = .short
+            df.timeStyle = .short
+            
+            return df
+        }
+    }
+    
+    fileprivate func addLocation(coordinate:CLLocationCoordinate2D, arrivalDate:Date, departureDate:Date, origin:LocationOrigin) {
         let moc = self.persistentContainer.viewContext
         let location = NSEntityDescription.insertNewObject(forEntityName: Location.ManagedObjectName, into: moc) as! Location
         location.coordinate = coordinate
         location.origin = origin.rawValue
         location.arrivalDate = arrivalDate as NSDate
-        if departureDate != nil && departureDate != Date.distantFuture {
-            location.departureDate = departureDate! as NSDate
-        }
+        location.departureDate = departureDate as NSDate
+        
         do {
             try moc.save()
         } catch {
             print(error)
         }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
-            self.locationManager.startMonitoringVisits()
+        
+        let content = UNMutableNotificationContent()
+        content.title = NSLocalizedString("New Location Saved", comment: "New Location Saved")
+        let df = self.dateFormatter
+        
+        let arrivalDate = df.string(from: location.arrivalDate! as Date)
+        let departureDate = df.string(from: location.departureDate! as Date)
+        
+        content.body = "arrivalDate: \(arrivalDate), departureDate: \(departureDate), coordinate: \(location.coordinate) origin: \(location.origin)"
+        content.sound = UNNotificationSound.default()
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: "LocationUpdate", content: content, trigger: trigger)
+        let nc = UNUserNotificationCenter.current()
+        nc.add(request) { (e:Error?) in
+            if let er = e {
+                print(er)
+            }
         }
     }
     
@@ -138,5 +170,19 @@ extension AppDelegate:CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         self.addLocation(coordinate: visit.coordinate, arrivalDate: visit.arrivalDate, departureDate: visit.departureDate, origin: LocationOrigin.visit)
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,  willPresent notification: UNNotification, withCompletionHandler   completionHandler: @escaping (_ options:   UNNotificationPresentationOptions) -> Void) {
+        print("Handle push from foreground")
+        // custom code to handle push while app is in the foreground
+        print("\(notification.request.content.userInfo)")
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("Handle push from background or closed")
+        // if you set a member variable in didReceiveRemoteNotification, you  will know if this is from closed or background
+        print("\(response.notification.request.content.userInfo)")
     }
 }

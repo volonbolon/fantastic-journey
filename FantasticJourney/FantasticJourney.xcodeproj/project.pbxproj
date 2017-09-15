@@ -20,6 +20,8 @@
 		B01FEB591F682C540050972E /* FantasticJourneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01FEB581F682C540050972E /* FantasticJourneyTests.swift */; };
 		B01FEB641F682C540050972E /* FantasticJourneyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01FEB631F682C540050972E /* FantasticJourneyUITests.swift */; };
 		B06766821F6C0EB300496FEC /* IntrospectiveCoreLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06766811F6C0EB300496FEC /* IntrospectiveCoreLocationManager.swift */; };
+		B06766841F6C386800496FEC /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07B84841F6B054000E673E8 /* UserNotifications.framework */; };
+		B06766851F6C386800496FEC /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07B84851F6B054000E673E8 /* UserNotificationsUI.framework */; };
 		B07B848E1F6B0EAC00E673E8 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07B848C1F6B0EAC00E673E8 /* Location+CoreDataClass.swift */; };
 		B07B848F1F6B0EAC00E673E8 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07B848D1F6B0EAC00E673E8 /* Location+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +63,7 @@
 		B01FEB631F682C540050972E /* FantasticJourneyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasticJourneyUITests.swift; sourceTree = "<group>"; };
 		B01FEB651F682C540050972E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B06766811F6C0EB300496FEC /* IntrospectiveCoreLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntrospectiveCoreLocationManager.swift; sourceTree = "<group>"; };
+		B06766831F6C383E00496FEC /* FantasticJourney.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FantasticJourney.entitlements; sourceTree = "<group>"; };
 		B07B84841F6B054000E673E8 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		B07B84851F6B054000E673E8 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		B07B848C1F6B0EAC00E673E8 /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -72,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B06766841F6C386800496FEC /* UserNotifications.framework in Frameworks */,
+				B06766851F6C386800496FEC /* UserNotificationsUI.framework in Frameworks */,
 				B0170A4D1F6894C500448BE4 /* CoreLocation.framework in Frameworks */,
 				B0170A4B1F6892B200448BE4 /* MapKit.framework in Frameworks */,
 			);
@@ -138,6 +143,7 @@
 		B01FEB3F1F682C540050972E /* FantasticJourney */ = {
 			isa = PBXGroup;
 			children = (
+				B06766831F6C383E00496FEC /* FantasticJourney.entitlements */,
 				B0170A441F68695A00448BE4 /* Managed Objects */,
 				B01FEB401F682C540050972E /* AppDelegate.swift */,
 				B01FEB421F682C540050972E /* ViewController.swift */,
@@ -243,6 +249,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -472,6 +481,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FantasticJourney/FantasticJourney.entitlements;
 				DEVELOPMENT_TEAM = L5262XM8UA;
 				INFOPLIST_FILE = FantasticJourney/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -485,6 +495,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FantasticJourney/FantasticJourney.entitlements;
 				DEVELOPMENT_TEAM = L5262XM8UA;
 				INFOPLIST_FILE = FantasticJourney/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
