@@ -24,9 +24,11 @@ class ViewController: UIViewController {
     @IBAction func toggleAction(_ sender: UIButton) {
         var title:String!
         if self.locationManager.updating {
+            self.pickerView.isUserInteractionEnabled = true
             title = NSLocalizedString("Start", comment: "Start")
             self.stopServices()
         } else {
+            self.pickerView.isUserInteractionEnabled = false
             title = NSLocalizedString("Stop", comment: "Stop")
             self.startServices()
         }
@@ -62,10 +64,10 @@ extension ViewController { // MARK:- Helpers
         case 0:
             self.locationManager.startMonitoringVisits()
         case 1:
-            self.locationManager.startUpdatingLocation()
+            self.locationManager.startMonitoringSignificantLocationChanges()
         default:
             self.locationManager.startMonitoringVisits()
-            self.locationManager.startUpdatingLocation()
+            self.locationManager.startMonitoringSignificantLocationChanges()
         }
     }
 }
