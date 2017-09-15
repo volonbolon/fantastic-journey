@@ -15,6 +15,21 @@ enum LocationOrigin:Int16 {
     case significantChange = 2
 }
 
+extension LocationOrigin:CustomStringConvertible {
+    var description: String {
+        get {
+            var description:String!
+            switch self {
+            case .visit:
+                description = "CLVisit"
+            default:
+                description = "Significant Change"
+            }
+            return description
+        }
+    }
+}
+
 @objc(Location)
 public class Location: NSManagedObject {
     static let ManagedObjectName:String = "Location"
