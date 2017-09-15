@@ -10,9 +10,9 @@ import Foundation
 import CoreData
 import CoreLocation
 
-enum LocationOrigin:Int {
-    case visit
-    case significantChange
+enum LocationOrigin:Int16 {
+    case visit = 1
+    case significantChange = 2
 }
 
 @objc(Location)

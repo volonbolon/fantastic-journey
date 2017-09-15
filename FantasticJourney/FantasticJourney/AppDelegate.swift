@@ -15,11 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let locationManager = CLLocationManager()
-
+    var deferringLocation = false
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         return true
     }
@@ -96,24 +98,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate:CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
-            self.locationManager.startMonitoringVisits()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+    fileprivate func addLocation(coordinate:CLLocationCoordinate2D, arrivalDate:Date, departureDate:Date?, origin:LocationOrigin) {
         let moc = self.persistentContainer.viewContext
         let location = NSEntityDescription.insertNewObject(forEntityName: Location.ManagedObjectName, into: moc) as! Location
-        location.coordinate = visit.coordinate
-        location.arrivalDate = visit.arrivalDate as NSDate
-        if visit.departureDate != Date.distantFuture {
-            location.departureDate = visit.departureDate as NSDate
+        location.coordinate = coordinate
+        location.origin = origin.rawValue
+        location.arrivalDate = arrivalDate as NSDate
+        if departureDate != nil && departureDate != Date.distantFuture {
+            location.departureDate = departureDate! as NSDate
         }
         do {
             try moc.save()
         } catch {
             print(error)
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways {
+            self.locationManager.startMonitoringVisits()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let l = locations.last!
+        self.addLocation(coordinate: l.coordinate, arrivalDate: l.timestamp, departureDate: Date.distantFuture, origin: LocationOrigin.significantChange)
+        if !self.deferringLocation {
+            self.locationManager.allowDeferredLocationUpdates(untilTraveled: 300, timeout: 300)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFinishDeferredUpdatesWithError error: Error?) {
+        if error == nil {
+            print(error!)
+        } else {
+            self.deferringLocation = false
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        self.addLocation(coordinate: visit.coordinate, arrivalDate: visit.arrivalDate, departureDate: visit.departureDate, origin: LocationOrigin.visit)
     }
 }
