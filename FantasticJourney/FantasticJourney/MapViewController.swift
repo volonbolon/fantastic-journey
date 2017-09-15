@@ -11,6 +11,17 @@ import CoreLocation
 import MapKit
 import CoreData
 
+class LocationAnnotation:NSObject, MKAnnotation {
+    var origin:LocationOrigin!
+    var coordinate: CLLocationCoordinate2D
+    var title: String?
+    var subtitle: String?
+    
+    init(coordinate:CLLocationCoordinate2D, origin:LocationOrigin) {
+        self.coordinate = coordinate
+        self.origin = origin
+    }
+}
 
 class MapViewController: UIViewController {
 
@@ -27,16 +38,20 @@ class MapViewController: UIViewController {
             return self._context!
         }
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         let locationFetch = NSFetchRequest<NSFetchRequestResult>(entityName: Location.ManagedObjectName)
         
+        var locations:[LocationAnnotation] = []
         do {
             let fetch = try self.context.fetch(locationFetch) as! [Location]
             for l in fetch {
-                print(l)
+                let av = LocationAnnotation(coordinate: l.coordinate, origin: l.locationOrigin)
+                locations.append(av)
             }
+            self.mapView.addAnnotations(locations)
         } catch {
             print(error)
         }
@@ -55,31 +70,6 @@ extension MapViewController:MKMapViewDelegate {
         }
     }
     
-//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//
-//        let mapRegion = mapView.region
-//        var annotations:[MKPointAnnotation] = []
-//        for _ in 0..<215 {
-//            let c = mapRegion.randomCoordinate()
-//            let location = NSEntityDescription.insertNewObject(forEntityName: Location.ManagedObjectName, into: context) as! Location
-//            location.latitude = c.latitude
-//            location.longitude = c.longitude
-//            location.timestamp = Date() as NSDate
-//            location.origin = Int16(arc4random_uniform(2)) + 1
-//            
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = c
-//            annotations.append(annotation)
-//        }
-//        mapView.addAnnotations(annotations)
-//        
-//        do {
-//            try context.save()
-//        } catch {
-//            print(error)
-//        }
-//    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = MapViewController.reuseIdentifer
         
@@ -90,6 +80,17 @@ extension MapViewController:MKMapViewDelegate {
         
         let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
         annotationView.animatesDrop = true
+        
+        if annotation is LocationAnnotation {
+            let origin = (annotation as! LocationAnnotation).origin!
+            switch origin {
+            case .visit:
+                annotationView.pinTintColor = UIColor.red
+            case .significantChange:
+                annotationView.pinTintColor = UIColor.blue
+            }
+        }
+        
         annotationView.canShowCallout = true
         return annotationView
     }
