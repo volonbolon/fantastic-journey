@@ -2,7 +2,7 @@
 //  Location+CoreDataProperties.swift
 //  FantasticJourney
 //
-//  Created by Ariel Rodriguez on 9/12/17.
+//  Created by Ariel Rodriguez on 9/14/17.
 //  Copyright © 2017 Sp0n. All rights reserved.
 //
 
@@ -16,9 +16,10 @@ extension Location {
         return NSFetchRequest<Location>(entityName: "Location")
     }
 
-    @NSManaged public var timestamp: NSDate?
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
     @NSManaged public var origin: Int16
+    @NSManaged public var arrivalDate: NSDate?
+    @NSManaged public var departureDate: NSDate?
 
 }
