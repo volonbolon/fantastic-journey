@@ -103,7 +103,17 @@ extension AppDelegate:CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
-        print(visit)
+        let moc = self.persistentContainer.viewContext
+        let location = NSEntityDescription.insertNewObject(forEntityName: Location.ManagedObjectName, into: moc) as! Location
+        location.coordinate = visit.coordinate
+        location.arrivalDate = visit.arrivalDate as NSDate
+        if visit.departureDate != Date.distantFuture {
+            location.departureDate = visit.departureDate as NSDate
+        }
+        do {
+            try moc.save()
+        } catch {
+            print(error)
+        }
     }
 }
-
