@@ -45,4 +45,10 @@ public class Location: NSManagedObject {
             self.longitude = newValue.longitude
         }
     }
+    
+    var locationOrigin:LocationOrigin {
+        get {
+            return LocationOrigin(rawValue: self.origin)!
+        }
+    }
 }
