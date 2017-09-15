@@ -45,8 +45,8 @@ class LogTableViewControllerDatasource:NSObject, UITableViewDataSource {
     override init() {
         super.init()
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Location.ManagedObjectName)
-        let sortByDate = NSSortDescriptor(key: "timestamp", ascending: true)
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = Location.fetchRequest()
+        let sortByDate = NSSortDescriptor(key: "arrivalDate", ascending: true)
         fetchRequest.sortDescriptors = [sortByDate]
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
         
@@ -79,7 +79,7 @@ class LogTableViewControllerDatasource:NSObject, UITableViewDataSource {
         let lat = String(format:"%.5f", location.latitude)
         let lng = String(format:"%.5f", location.longitude)
         cell.locationLabel.text = "\(lat), \(lng)"
-        let date = self.dateFormatter.string(from: location.timestamp! as Date)
+        let date = self.dateFormatter.string(from: location.arrivalDate! as Date)
         cell.timestampLabel.text = date
         
         return cell
