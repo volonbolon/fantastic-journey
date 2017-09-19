@@ -27,6 +27,19 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
+    private var _dateFormatter:DateFormatter?
+    var locationDateFormatter:DateFormatter {
+        get {
+            if self._dateFormatter == nil {
+                let df = DateFormatter()
+                df.dateStyle = .short
+                df.timeStyle = .short
+                self._dateFormatter = df
+            }
+            return self._dateFormatter!
+        }
+    }
+    
     var _context:NSManagedObjectContext?
     var context:NSManagedObjectContext {
         get {
@@ -53,6 +66,7 @@ class MapViewController: UIViewController {
             let fetch = try self.context.fetch(locationFetch) as! [Location]
             for l in fetch {
                 let av = LocationAnnotation(coordinate: l.coordinate, origin: l.locationOrigin)
+                av.title = self.locationDateFormatter.string(from: l.arrivalDate! as Date)
                 locations.append(av)
             }
             self.mapView.addAnnotations(locations)
@@ -68,7 +82,7 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController { // MARK:- Export
-    var dateFormatter:DateFormatter {
+    var exportDateFormatter:DateFormatter {
         get {
             let df = DateFormatter()
             df.dateFormat = "dd.MM.yy hh:MM a"
@@ -116,7 +130,7 @@ extension MapViewController { // MARK:- Export
 
         var exportString = "Origin, Coordinate, Arrival Date, Departure Date\n"
 
-        let df = self.dateFormatter
+        let df = self.exportDateFormatter
         do {
             let fetch = try self.context.fetch(locationFetch) as! [Location]
             for l in fetch {
@@ -139,6 +153,7 @@ extension MapViewController { // MARK:- Helpers
         if let inserted = notification.userInfo?[NSInsertedObjectsKey] as? Set<Location>, inserted.count > 0 {
             for l in inserted {
                 let av = LocationAnnotation(coordinate: l.coordinate, origin: l.locationOrigin)
+                av.title = self.locationDateFormatter.string(from: l.arrivalDate! as Date)
                 self.mapView.addAnnotation(av)
             }
         }
