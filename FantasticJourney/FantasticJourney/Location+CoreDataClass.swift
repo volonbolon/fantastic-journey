@@ -33,7 +33,7 @@ extension LocationOrigin:CustomStringConvertible {
 @objc(Location)
 public class Location: NSManagedObject {
     static let ManagedObjectName:String = "Location"
-    
+
     var coordinate:CLLocationCoordinate2D {
         get {
             let lc = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
@@ -49,6 +49,23 @@ public class Location: NSManagedObject {
     var locationOrigin:LocationOrigin {
         get {
             return LocationOrigin(rawValue: self.origin)!
+        }
+    }
+    
+    var title:String {
+        get {
+            let df = DateFormatter()
+            df.dateStyle = .short
+            df.timeStyle = .short
+            
+            let arrivalDateString = df.string(from: self.arrivalDate! as Date)
+            var title = "\(self.locationOrigin) || \(arrivalDateString)"
+            
+            if let dd = self.departureDate, (dd as Date) != Date.distantFuture {
+                let departureDateString = df.string(from:dd as Date)
+                title += " \(departureDateString)"
+            }
+            return title
         }
     }
 }

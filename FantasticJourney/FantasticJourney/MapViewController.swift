@@ -43,18 +43,7 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
-    private var _dateFormatter:DateFormatter?
-    var locationDateFormatter:DateFormatter {
-        get {
-            if self._dateFormatter == nil {
-                let df = DateFormatter()
-                df.dateStyle = .short
-                df.timeStyle = .short
-                self._dateFormatter = df
-            }
-            return self._dateFormatter!
-        }
-    }
+    
     
     var _context:NSManagedObjectContext?
     var context:NSManagedObjectContext {
