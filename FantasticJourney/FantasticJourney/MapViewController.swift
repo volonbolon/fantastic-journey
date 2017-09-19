@@ -11,34 +11,6 @@ import CoreLocation
 import MapKit
 import CoreData
 
-class LocationAnnotation:NSObject, MKAnnotation {
-    let location:Location
-    
-    var origin:LocationOrigin {
-        get {
-            return self.location.locationOrigin
-        }
-    }
-    
-    var coordinate: CLLocationCoordinate2D {
-        get {
-            return self.location.coordinate
-        }
-    }
-    
-    var title: String? {
-        get {
-            return self.location.title
-        }
-    }
-    
-    var subtitle: String?
-    
-    init(location:Location) {
-        self.location = location
-    }
-}
-
 class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
