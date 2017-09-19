@@ -14,7 +14,7 @@ import CoreData
 class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
-    
+    var selectedLocation:Location?
     
     
     var _context:NSManagedObjectContext?
@@ -54,6 +54,16 @@ class MapViewController: UIViewController {
     @IBAction func export(_ sender: Any) {
         let s = self.exportString()
         self.saveAndExport(exportString: s)
+    }
+}
+
+extension MapViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let identifier = segue.identifier
+        if identifier == Constants.StoryboardsIdentifier.ShowDetailsFromMap {
+            let dvc = segue.destination as! LocationDetailsViewController
+            dvc.location = self.selectedLocation
+        }
     }
 }
 
@@ -140,6 +150,22 @@ extension MapViewController:MKMapViewDelegate {
         get {
             return "mapAnnotation"
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        self.selectedLocation = nil
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation {
+            if annotation is LocationAnnotation {
+                self.selectedLocation = (annotation as! LocationAnnotation).location
+            }
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        self.performSegue(withIdentifier: Constants.StoryboardsIdentifier.ShowDetailsFromMap, sender: nil)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
