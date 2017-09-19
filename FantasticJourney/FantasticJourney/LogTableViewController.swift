@@ -84,23 +84,17 @@ class LogTableViewControllerDatasource:NSObject, UITableViewDataSource {
         
         return cell
     }
-    
-    
 }
 
 class LogTableViewController: UITableViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.StoryboardsIdentifier.ShowDetailsFromList {
+            if let ip = self.tableView.indexPathForSelectedRow {
+                let tableViewDatasource = self.tableView.dataSource as! LogTableViewControllerDatasource
+                let location = tableViewDatasource.fetchedResultsController.object(at: ip) as! Location
+                let dvc = segue.destination as! LocationDetailsViewController
+                dvc.location = location
+            }
+        }
     }
 }
