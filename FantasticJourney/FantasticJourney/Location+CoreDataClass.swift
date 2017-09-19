@@ -15,6 +15,12 @@ enum LocationOrigin:Int16 {
     case significantChange = 2
 }
 
+enum LocationRating:Int16 {
+    case unknown = 0
+    case good = 1
+    case bad = 2
+}
+
 extension LocationOrigin:CustomStringConvertible {
     var description: String {
         get {
@@ -33,7 +39,7 @@ extension LocationOrigin:CustomStringConvertible {
 @objc(Location)
 public class Location: NSManagedObject {
     static let ManagedObjectName:String = "Location"
-
+    
     var coordinate:CLLocationCoordinate2D {
         get {
             let lc = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
@@ -49,6 +55,16 @@ public class Location: NSManagedObject {
     var locationOrigin:LocationOrigin {
         get {
             return LocationOrigin(rawValue: self.origin)!
+        }
+    }
+    
+    var locationRating:LocationRating {
+        get {
+            return LocationRating(rawValue: self.rating)!
+        }
+
+        set {
+            self.rating = newValue.rawValue
         }
     }
     
