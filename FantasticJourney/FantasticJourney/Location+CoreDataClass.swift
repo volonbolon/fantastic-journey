@@ -15,12 +15,6 @@ enum LocationOrigin:Int16 {
     case significantChange = 2
 }
 
-enum LocationRating:Int16 {
-    case unknown = 0
-    case good = 1
-    case bad = 2
-}
-
 extension LocationOrigin:CustomStringConvertible {
     var description: String {
         get {
@@ -33,6 +27,28 @@ extension LocationOrigin:CustomStringConvertible {
             }
             return description
         }
+    }
+}
+
+enum LocationRating:Int16 {
+    case unknown = 0
+    case good = 1
+    case bad = 2
+}
+
+extension LocationRating:CustomStringConvertible {
+    var description: String {
+        var description:String!
+        switch self {
+        case .unknown:
+            description = "Unknown"
+        case .bad:
+            description = "Bad"
+        case .good:
+            description = "Good"
+        }
+        
+        return description
     }
 }
 
@@ -82,6 +98,23 @@ public class Location: NSManagedObject {
                 title += " \(departureDateString)"
             }
             return title
+        }
+    }
+    
+    var export:String {
+        get {
+            let df = DateFormatter()
+            df.dateFormat = "dd.MM.yy hh:MM a"
+            
+            let arrivalDate = df.string(from: self.arrivalDate! as Date)
+            var departureDate = "N/A"
+            if (self.departureDate! as Date) != Date.distantFuture {
+                departureDate = df.string(from: (self.departureDate! as Date))
+            }
+            
+            let export = "\(self.locationOrigin), \(self.locationRating), \(self.coordinate), \(arrivalDate), \(departureDate)\n"
+            
+            return export
         }
     }
 }
