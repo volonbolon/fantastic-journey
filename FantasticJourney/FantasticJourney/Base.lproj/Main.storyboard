@@ -96,11 +96,55 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="prF-n5-Erq" id="ooV-Pd-nW5"/>
+                        <segue destination="ChE-DJ-hMT" kind="show" identifier="showDetailsFromMap" id="Kwi-6A-4fq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dmo-PI-g5G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="648.79999999999995" y="921.58920539730138"/>
+        </scene>
+        <!--Location Details View Controller-->
+        <scene sceneID="X0F-AR-tIH">
+            <objects>
+                <viewController id="ChE-DJ-hMT" customClass="LocationDetailsViewController" customModule="FantasticJourney" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XgF-zc-qbT"/>
+                        <viewControllerLayoutGuide type="bottom" id="9uj-3A-m4J"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FqH-hw-JYi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IAg-yw-bAK">
+                                <rect key="frame" x="16" y="72" width="343" height="507"/>
+                            </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2tK-ld-JWY">
+                                <rect key="frame" x="80" y="587" width="215" height="29"/>
+                                <segments>
+                                    <segment title="Unknown"/>
+                                    <segment title="Good"/>
+                                    <segment title="Bad"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IAg-yw-bAK" firstAttribute="top" secondItem="XgF-zc-qbT" secondAttribute="bottom" constant="8" id="H2r-ea-gVZ"/>
+                            <constraint firstItem="9uj-3A-m4J" firstAttribute="top" secondItem="2tK-ld-JWY" secondAttribute="bottom" constant="8" id="bBe-AY-Tw2"/>
+                            <constraint firstItem="IAg-yw-bAK" firstAttribute="leading" secondItem="FqH-hw-JYi" secondAttribute="leadingMargin" id="mxz-gd-mM6"/>
+                            <constraint firstItem="IAg-yw-bAK" firstAttribute="trailing" secondItem="FqH-hw-JYi" secondAttribute="trailingMargin" id="sHy-E0-4Y1"/>
+                            <constraint firstItem="2tK-ld-JWY" firstAttribute="centerX" secondItem="FqH-hw-JYi" secondAttribute="centerX" id="ux3-M5-GPU"/>
+                            <constraint firstItem="2tK-ld-JWY" firstAttribute="top" secondItem="IAg-yw-bAK" secondAttribute="bottom" constant="8" id="vIp-kY-uLT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="IAg-yw-bAK" id="acu-jf-Y0O"/>
+                        <outlet property="segmentedControl" destination="2tK-ld-JWY" id="uAv-as-Gsa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4oS-QT-ydw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1048.8" y="1650.224887556222"/>
         </scene>
         <!--Log-->
         <scene sceneID="u08-Cn-0lF">
@@ -142,6 +186,7 @@
                                 <connections>
                                     <outlet property="locationLabel" destination="MLO-bg-0BM" id="vwQ-F4-YcI"/>
                                     <outlet property="timestampLabel" destination="Fjb-5Q-NRs" id="mHF-JN-CQK"/>
+                                    <segue destination="ChE-DJ-hMT" kind="show" identifier="showDetailsFromList" id="cO9-eD-wcI"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -198,4 +243,7 @@
             <point key="canvasLocation" x="-290.39999999999998" y="921.58920539730138"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="cO9-eD-wcI"/>
+    </inferredMetricsTieBreakers>
 </document>
