@@ -180,9 +180,10 @@ extension MapViewController:MKMapViewDelegate {
         
         let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
         annotationView.animatesDrop = true
+        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         
         if annotation is LocationAnnotation {
-            let origin = (annotation as! LocationAnnotation).origin!
+            let origin = (annotation as! LocationAnnotation).origin
             switch origin {
             case .visit:
                 annotationView.pinTintColor = UIColor.red
