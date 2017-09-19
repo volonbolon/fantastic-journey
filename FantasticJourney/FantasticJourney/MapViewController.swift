@@ -38,9 +38,13 @@ class MapViewController: UIViewController {
             return self._context!
         }
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidLoad() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleContextChanges), name: .NSManagedObjectContextObjectsDidChange, object: self.context)
         
         let locationFetch = NSFetchRequest<NSFetchRequestResult>(entityName: Location.ManagedObjectName)
         
@@ -127,6 +131,17 @@ extension MapViewController { // MARK:- Export
         }
 
         return exportString
+    }
+}
+
+extension MapViewController { // MARK:- Helpers
+    func handleContextChanges(notification:Notification) {
+        if let inserted = notification.userInfo?[NSInsertedObjectsKey] as? Set<Location>, inserted.count > 0 {
+            for l in inserted {
+                let av = LocationAnnotation(coordinate: l.coordinate, origin: l.locationOrigin)
+                self.mapView.addAnnotation(av)
+            }
+        }
     }
 }
 

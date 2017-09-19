@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(e!)
             }
         }
-        
+
         return true
     }
 
@@ -104,7 +104,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 
 extension AppDelegate:CLLocationManagerDelegate {
