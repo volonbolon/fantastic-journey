@@ -68,14 +68,6 @@ extension MapViewController {
 }
 
 extension MapViewController { // MARK:- Export
-    var exportDateFormatter:DateFormatter {
-        get {
-            let df = DateFormatter()
-            df.dateFormat = "dd.MM.yy hh:MM a"
-            return df
-        }
-    }
-    
     func saveAndExport(exportString: String) {
         let exportFilePath = NSTemporaryDirectory() + "locations.csv"
         let exportFileURL = NSURL(fileURLWithPath: exportFilePath)
@@ -114,16 +106,12 @@ extension MapViewController { // MARK:- Export
     func exportString() -> String {
         let locationFetch = NSFetchRequest<NSFetchRequestResult>(entityName: Location.ManagedObjectName)
 
-        var exportString = "Origin, Coordinate, Arrival Date, Departure Date\n"
+        var exportString = "Origin, Rating, Coordinate, Arrival Date, Departure Date\n"
 
-        let df = self.exportDateFormatter
         do {
             let fetch = try self.context.fetch(locationFetch) as! [Location]
             for l in fetch {
-                let arrivalDate = df.string(from: l.arrivalDate! as Date)
-                let departureDate = df.string(from: l.departureDate! as Date)
-                let coordinate = "\(l.latitude) \(l.longitude)"
-                let s = "\(l.locationOrigin), \(coordinate), \(arrivalDate), \(departureDate)"
+                let s = l.export
                 exportString += s
             }
         } catch {
