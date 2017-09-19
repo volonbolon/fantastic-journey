@@ -12,14 +12,30 @@ import MapKit
 import CoreData
 
 class LocationAnnotation:NSObject, MKAnnotation {
-    var origin:LocationOrigin!
-    var coordinate: CLLocationCoordinate2D
-    var title: String?
+    let location:Location
+    
+    var origin:LocationOrigin {
+        get {
+            return self.location.locationOrigin
+        }
+    }
+    
+    var coordinate: CLLocationCoordinate2D {
+        get {
+            return self.location.coordinate
+        }
+    }
+    
+    var title: String? {
+        get {
+            return self.location.title
+        }
+    }
+    
     var subtitle: String?
     
-    init(coordinate:CLLocationCoordinate2D, origin:LocationOrigin) {
-        self.coordinate = coordinate
-        self.origin = origin
+    init(location:Location) {
+        self.location = location
     }
 }
 
@@ -65,8 +81,7 @@ class MapViewController: UIViewController {
         do {
             let fetch = try self.context.fetch(locationFetch) as! [Location]
             for l in fetch {
-                let av = LocationAnnotation(coordinate: l.coordinate, origin: l.locationOrigin)
-                av.title = self.locationDateFormatter.string(from: l.arrivalDate! as Date)
+                let av = LocationAnnotation(location: l)
                 locations.append(av)
             }
             self.mapView.addAnnotations(locations)
@@ -152,8 +167,7 @@ extension MapViewController { // MARK:- Helpers
     func handleContextChanges(notification:Notification) {
         if let inserted = notification.userInfo?[NSInsertedObjectsKey] as? Set<Location>, inserted.count > 0 {
             for l in inserted {
-                let av = LocationAnnotation(coordinate: l.coordinate, origin: l.locationOrigin)
-                av.title = self.locationDateFormatter.string(from: l.arrivalDate! as Date)
+                let av = LocationAnnotation(location: l)
                 self.mapView.addAnnotation(av)
             }
         }
