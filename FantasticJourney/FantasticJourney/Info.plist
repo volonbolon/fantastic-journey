@@ -34,6 +34,10 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>The Gracehoper was always jigging ajog, hoppy on akkant of his joyicity.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The Gracehoper was always jigging ajog, hoppy on akkant of his joyicity.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
