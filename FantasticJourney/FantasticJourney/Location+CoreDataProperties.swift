@@ -22,5 +22,5 @@ extension Location {
     @NSManaged public var longitude: Double
     @NSManaged public var origin: Int16
     @NSManaged public var rating: Int16
-
+    @NSManaged public var successfullyPosted: Bool
 }
