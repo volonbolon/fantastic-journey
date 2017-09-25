@@ -14,7 +14,9 @@ import UserNotificationsUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    var bgTask:UIBackgroundTaskIdentifier? = nil
+    
     var window: UIWindow?
     let locationManager = IntrospectiveCoreLocationManager()
     var deferringLocation = false
@@ -144,11 +146,21 @@ extension AppDelegate:CLLocationManagerDelegate {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: "LocationUpdate", content: content, trigger: trigger)
         let nc = UNUserNotificationCenter.current()
+        
+        self.bgTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            if let bgt = self.bgTask {
+                UIApplication.shared.endBackgroundTask(bgt)
+            }
+            self.bgTask = nil
+        })
+        
         nc.add(request) { (e:Error?) in
             if let er = e {
                 print(er)
             }
         }
+        
+        self.sendLocation(location: location)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -181,3 +193,74 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print("\(response.notification.request.content.userInfo)")
     }
 }
+
+extension AppDelegate { // NSURLSession
+    func sendLocation(location:Location) {
+        /* Configure session, choose between:
+         * defaultSessionConfiguration
+         * ephemeralSessionConfiguration
+         * backgroundSessionConfigurationWithIdentifier:
+         And set session-wide properties, such as: HTTPAdditionalHeaders,
+         HTTPCookieAcceptPolicy, requestCachePolicy or timeoutIntervalForRequest.
+         */
+        let sessionConfig = URLSessionConfiguration.default
+        
+        /* Create session, and optionally set a URLSessionDelegate. */
+        let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
+        
+        /* Create the Request:
+         Request Duplicate (POST https://fathomless-beyond-71849.herokuapp.com/locations)
+         */
+        
+        guard let URL = URL(string: "https://fathomless-beyond-71849.herokuapp.com/locations") else {return}
+        var request = URLRequest(url: URL)
+        request.httpMethod = "POST"
+        
+        // Headers
+        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // JSON Body
+        
+        let bodyObject: [String : Any] = [
+            "origin": location.locationOrigin.description,
+            "latitude":location.latitude,
+            "longitude":location.longitude,
+            "departure": Int(location.departureDate!.timeIntervalSince1970),
+            "arrival": Int(location.arrivalDate!.timeIntervalSince1970), //1506342247
+            "rating":location.locationRating.description
+        ]
+        
+        print(bodyObject)
+        
+        request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
+        
+        /* Start a new Task */
+        let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+            let success = error == nil
+            
+            DispatchQueue.main.async {
+                let moc = location.managedObjectContext
+                
+                location.successfullyPosted = success
+                
+                do {
+                    try moc!.save()
+                } catch {
+                    print(error)
+                }
+                
+                if let bgt = self.bgTask {
+                    UIApplication.shared.endBackgroundTask(bgt)
+                    self.bgTask = nil
+                }
+            }
+        })
+        task.resume()
+        session.finishTasksAndInvalidate()
+    }
+}
+
+
+
