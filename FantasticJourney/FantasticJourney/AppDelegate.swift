@@ -121,6 +121,7 @@ extension AppDelegate:CLLocationManagerDelegate {
     
     fileprivate func addLocation(coordinate:CLLocationCoordinate2D, arrivalDate:Date, departureDate:Date, origin:LocationOrigin) {
         let moc = self.persistentContainer.viewContext
+        // bitrise test
         let location = NSEntityDescription.insertNewObject(forEntityName: Location.ManagedObjectName, into: moc) as! Location
         location.coordinate = coordinate
         location.origin = origin.rawValue
